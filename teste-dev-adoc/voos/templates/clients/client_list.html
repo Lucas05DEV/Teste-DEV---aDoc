@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Clients{% endblock %}
+{% block content %}
+<div class="top-bar">
+    <h1>Clients</h1>
+    <a href="{% url 'client-create' %}" class="btn btn-primary">+ New Client</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+        <tr>
+            <td>{{ client.name }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.telephone|default:"-" }}</td>
+            <td>
+                <div class="actions">
+                    <a href="{% url 'client-update' client.pk %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'client-delete' client.pk %}" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No clients registered.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

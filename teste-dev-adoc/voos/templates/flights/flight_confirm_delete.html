@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Delete Flight{% endblock %}
+{% block content %}
+<h1>Delete Flight</h1>
+<div class="confirm-box">
+    <p>Are you sure you want to delete the flight <strong>{{ object.origin }} → {{ object.destination }}</strong> on <strong>{{ object.date }}</strong>?</p>
+    <p style="color:#e94560; font-size:0.9rem;">This will also delete all reservations linked to this flight.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="confirm-actions">
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'flight-list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

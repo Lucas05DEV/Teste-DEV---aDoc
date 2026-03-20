@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Reservation Detail{% endblock %}
+{% block content %}
+<div class="top-bar">
+    <h1>Reservation Detail</h1>
+    <div class="actions">
+        <a href="{% url 'reservation-update' reservation.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'reservation-delete' reservation.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'reservation-list' %}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+<div class="detail-card">
+    <div class="detail-row">
+        <span class="detail-label">Client</span>
+        <span>{{ reservation.client.name }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Flight</span>
+        <span>{{ reservation.flight.origin }} → {{ reservation.flight.destination }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Date</span>
+        <span>{{ reservation.flight.date }} at {{ reservation.flight.time }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Airplane</span>
+        <span>{{ reservation.flight.airplane.identification }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Seat Number</span>
+        <span>{{ reservation.seat_number }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Status</span>
+        <span class="badge badge-{{ reservation.status }}">{{ reservation.get_status_display }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Reserved on</span>
+        <span>{{ reservation.reservation_date|date:"d/m/Y H:i" }}</span>
+    </div>
+</div>
+{% endblock %}
