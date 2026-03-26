@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Reserve Seat — {{ flight }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="top-bar">
+        <h1>Reserve a seat</h1>
+        <a href="{% url 'flight-list' %}" class="btn btn-secondary">Back</a>
+    </div>
+
+    <table style="margin-bottom: 1.5rem;">
+        <tr><th>Flight</th><td>{{ flight.origin }} → {{ flight.destination }}</td></tr>
+        <tr><th>Date</th><td>{{ flight.date }}</td></tr>
+        <tr><th>Time</th><td>{{ flight.time }}</td></tr>
+        <tr><th>Airplane</th><td>{{ flight.airplane }}</td></tr>
+        <tr><th>Available seats</th><td>{{ flight.available_seats }}</td></tr>
+    </table>
+
+    {% if already_reserved %}
+        <div style="background:#fdecea;border:1px solid #f5c6c6;border-radius:8px;padding:1rem;color:#a94442;">
+            You already have an active reservation for this flight.
+        </div>
+    {% elif flight.available_seats == 0 %}
+        <div style="background:#fdecea;border:1px solid #f5c6c6;border-radius:8px;padding:1rem;color:#a94442;">
+            This flight is fully booked.
+        </div>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="seat_number">Choose your seat number (1 to {{ flight.airplane.max_capacity }})</label>
+            <input type="number" name="seat_number" id="seat_number" min="1" max="{{ flight.airplane.max_capacity }}" style="width:120px;margin-bottom:1rem;">
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Confirm reservation</button>
+                <a href="{% url 'flight-list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

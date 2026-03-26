@@ -3,6 +3,11 @@ from . import views
 
 urlpatterns = [
 
+    ## Auth
+    path('login/',views.CustomLoginView.as_view(), name='login'),
+    path('logout/',views.CustomLogoutView.as_view(), name='logout'),
+    path('register/',views.RegisterView.as_view(), name='register'),
+
     ## Airplane URLs
     path('airplanes/', views.AirplaneListView.as_view(), name='airplane-list'),
     path('airplanes/new/', views.AirplaneCreateView.as_view(), name='airplane-create'),
@@ -15,6 +20,8 @@ urlpatterns = [
     path('flights/<int:pk>/', views.FlightDetailView.as_view(), name='flight-detail'),
     path('flights/<int:pk>/edit/', views.FlightUpdateView.as_view(), name='flight-update'),
     path('flights/<int:pk>/delete/', views.FlightDeleteView.as_view(), name='flight-delete'),
+    path('flights/<int:pk>/reserve/', views.ClientReserveView.as_view(), name='flight-reserve'),
+
 
     ## Client URLs
     path('clients/', views.ClientListView.as_view(), name='client-list'),

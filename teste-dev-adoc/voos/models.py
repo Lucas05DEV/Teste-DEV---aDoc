@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, RegexValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 ## Class Airplane
 class Airplane(models.Model):
@@ -45,6 +46,7 @@ class Flight(models.Model):
 
 ## Class Client
 class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='client_profile')
     telephone_validator = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Informe um número de telefone válido (9 a 15 dígitos)")
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)

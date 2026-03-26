@@ -1,42 +1,48 @@
 {% extends 'base.html' %}
 {% block title %}Flights{% endblock %}
 {% block content %}
-<div class="top-bar">
-    <h1>Flights</h1>
-    <a href="{% url 'flight-create' %}" class="btn btn-primary">+ New Flight</a>
-</div>
-<table>
-    <thead>
-        <tr>
-            <th>Origin</th>
-            <th>Destination</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Airplane</th>
-            <th>Available Seats</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for flight in flights %}
-        <tr>
-            <td>{{ flight.origin }}</td>
-            <td>{{ flight.destination }}</td>
-            <td>{{ flight.date }}</td>
-            <td>{{ flight.time }}</td>
-            <td>{{ flight.airplane.identification }}</td>
-            <td>{{ flight.available_seats }}</td>
-            <td>
-                <div class="actions">
-                    <a href="{% url 'flight-detail' flight.pk %}" class="btn btn-primary">View</a>
+<div class="card">
+    <div class="top-bar">
+        <h1>Flights</h1>
+        {% if user.is_staff %}
+        <a href="{% url 'flight-create' %}" class="btn btn-primary">+ New Flight</a>
+        {% endif %}
+    </div>
+    {% if flights %}
+    <table>
+        <thead>
+            <tr>
+                <th>Route</th>
+                <th>Airplane</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Available Seats</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flight in flights %}
+            <tr>
+                <td>{{ flight.origin }} → {{ flight.destination }}</td>
+                <td>{{ flight.airplane }}</td>
+                <td>{{ flight.date }}</td>
+                <td>{{ flight.time }}</td>
+                <td>{{ flight.available_seats }}</td>
+                <td class="actions">
+                    <a href="{% url 'flight-detail' flight.pk %}" class="btn btn-secondary">View</a>
+                    {% if user.is_staff %}
                     <a href="{% url 'flight-update' flight.pk %}" class="btn btn-warning">Edit</a>
                     <a href="{% url 'flight-delete' flight.pk %}" class="btn btn-danger">Delete</a>
-                </div>
-            </td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="7">No flights registered.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    {% else %}
+                    <a href="{% url 'flight-reserve' flight.pk %}" class="btn btn-primary">Reserve</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No flights available.</p>
+    {% endif %}
+</div>
 {% endblock %}
