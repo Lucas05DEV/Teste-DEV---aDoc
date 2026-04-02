@@ -48,7 +48,7 @@ Aplicação web para gerenciamento de reservas de voos desenvolvida com Django e
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repo.git
+git clone https://github.com/Lucas05DEV/Teste-DEV---aDoc.git
 cd teste-dev-adoc
 ```
 
