@@ -58,6 +58,7 @@ cd teste-dev-adoc
 python -m venv .venv
 
 Se apresentar algum erro na criação da .venv execute novamente: python -m venv .venv
+Ou utilize: python -m venv .venv --without-pip
 
 # Windows
 .venv\Scripts\Activate.ps1
