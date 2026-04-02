@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Airplanes{% endblock %}
+{% block content %}
+<div class="top-bar">
+    <h1>Airplanes</h1>
+    <a href="{% url 'airplane-create' %}" class="btn btn-primary">+ New Airplane</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Identification</th>
+            <th>Max Capacity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for airplane in airplanes %}
+        <tr>
+            <td>{{ airplane.identification }}</td>
+            <td>{{ airplane.max_capacity }} pax</td>
+            <td>
+                <div class="actions">
+                    <a href="{% url 'airplane-update' airplane.pk %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'airplane-delete' airplane.pk %}" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No airplanes registered.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

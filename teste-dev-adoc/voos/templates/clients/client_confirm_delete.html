@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Delete Client{% endblock %}
+{% block content %}
+<h1>Delete Client</h1>
+<div class="confirm-box">
+    <p>Are you sure you want to delete <strong>{{ object.name }}</strong>?</p>
+    <p style="color:#e94560; font-size:0.9rem;">This will also delete all reservations linked to this client.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="confirm-actions">
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'client-list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Flight Detail{% endblock %}
+{% block content %}
+<div class="top-bar">
+    <h1>Flight Detail</h1>
+    <div class="actions">
+        <a href="{% url 'flight-update' flight.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'flight-delete' flight.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'flight-list' %}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+<div class="detail-card">
+    <div class="detail-row">
+        <span class="detail-label">Airplane</span>
+        <span>{{ flight.airplane.identification }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Origin</span>
+        <span>{{ flight.origin }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Destination</span>
+        <span>{{ flight.destination }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Date</span>
+        <span>{{ flight.date }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Time</span>
+        <span>{{ flight.time }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Available Seats</span>
+        <span>{{ flight.available_seats }} / {{ flight.airplane.max_capacity }}</span>
+    </div>
+</div>
+
+<h1 style="margin-top:2rem">Reservations for this flight</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Seat</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in flight.reservations.all %}
+        <tr>
+            <td>{{ reservation.client.name }}</td>
+            <td>{{ reservation.seat_number }}</td>
+            <td>
+                <span class="badge badge-{{ reservation.status }}">{{ reservation.get_status_display }}</span>
+            </td>
+            <td>{{ reservation.reservation_date|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No reservations for this flight.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
