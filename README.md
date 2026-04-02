@@ -57,6 +57,8 @@ cd teste-dev-adoc
 ```bash
 python -m venv .venv
 
+Se apresentar algum erro na criação da .venv execute novamente: python -m venv .venv
+
 # Windows
 .venv\Scripts\Activate.ps1
 
